@@ -1,6 +1,9 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Admin\OpportunityController as AdminOpportunityController;
+use App\Http\Controllers\Organizer\OpportunityController as OrganizerOpportunityController;
+use App\Http\Controllers\Volunteer\OpportunityController as VolunteerOpportunityController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +24,28 @@ Route::post('/login', [AuthController::class, 'login']);
 Route::middleware('auth:sanctum')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::get('/me', [AuthController::class, 'me']);
+});
+
+
+Route::middleware(['auth:sanctum', 'role:organizer'])->prefix('organizer')->group(function () {
+    Route::prefix('opportunities')->group(function () {
+        Route::get('/', [OrganizerOpportunityController::class, 'index']);
+        Route::post('/', [OrganizerOpportunityController::class, 'store']);
+        Route::get('/{opportunity}', [OrganizerOpportunityController::class, 'show']);
+        Route::put('/{opportunity}', [OrganizerOpportunityController::class, 'update']);
+    });
+});
+
+Route::middleware(['auth:sanctum', 'role:volunteer'])->prefix('volunteer')->group(function () {
+    Route::prefix('opportunities')->group(function () {
+        Route::get('/', [VolunteerOpportunityController::class, 'index']);
+        Route::get('/{id}', [VolunteerOpportunityController::class, 'show']);
+    });
+});
+
+Route::middleware(['auth:sanctum', 'role:admin'])->prefix('admin')->group(function () {
+    Route::prefix('opportunities')->group(function () {
+        Route::get('/', [AdminOpportunityController::class, 'index']);
+        Route::put('/{id}/status', [AdminOpportunityController::class, 'updateStatus']);
+    });
 });
