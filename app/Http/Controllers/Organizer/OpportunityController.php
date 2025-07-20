@@ -44,7 +44,7 @@ class OpportunityController extends Controller
 
     public function show(Opportunity $opportunity)
     {
-        $this->authorize('view', $opportunity);
+        $this->authorize('manage', $opportunity);
 
         $opportunity->load('category');
 
@@ -53,7 +53,7 @@ class OpportunityController extends Controller
 
     public function update(Request $request, Opportunity $opportunity)
     {
-        $this->authorize('update', $opportunity);
+        $this->authorize('manage', $opportunity);
 
         $request->validate([
             'title'       => 'sometimes|required|string|max:255',

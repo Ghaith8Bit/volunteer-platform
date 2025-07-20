@@ -21,7 +21,7 @@ class OpportunitySeeder extends Seeder
                 'location' => "City $i",
                 'start_date' => Carbon::now()->addDays($i),
                 'end_date' => Carbon::now()->addDays($i + 5),
-                'organizer_id' => 1,
+                'organizer_id' => 2,
                 'status' => 'approved',
             ]);
         }

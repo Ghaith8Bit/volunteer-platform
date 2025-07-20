@@ -8,12 +8,7 @@ use Illuminate\Auth\Access\Response;
 
 class OpportunityPolicy
 {
-    public function view(User $user, Opportunity $opportunity)
-    {
-        return $user->id === $opportunity->organizer_id;
-    }
-
-    public function update(User $user, Opportunity $opportunity)
+    public function manage(User $user, Opportunity $opportunity)
     {
         return $user->id === $opportunity->organizer_id;
     }
