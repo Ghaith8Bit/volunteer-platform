@@ -17,6 +17,9 @@ return new class extends Migration
             $table->foreignId('reporter_id')
                 ->constrained('users')
                 ->onDelete('cascade');
+            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('cascade');
+            $table->foreignId('opportunity_id')->nullable()->constrained('opportunities')->onDelete('cascade');
+
 
             $table->text('reason');
             $table->enum('status', ['pending', 'resolved', 'dismissed'])->default('pending');
