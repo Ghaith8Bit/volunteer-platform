@@ -47,9 +47,13 @@ class MessageController extends Controller
     public function send(Request $request)
     {
         $request->validate([
-            'receiver_id'  => 'required|exists:users,id|different:auth_user_id',
+            'receiver_id'  => 'required|exists:users,id',
             'message_text' => 'required|string|max:1000',
         ], [], ['receiver_id' => 'recipient']);
+
+        if ($request->receiver_id == $request->user()->id) {
+            return $this->error('Cannot message yourself', 422);
+        }
 
         $sender = $request->user();
 

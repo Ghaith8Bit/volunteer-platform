@@ -125,6 +125,18 @@ You used `ApplicationResource`, `OpportunityResource`, etc. to return readable d
 }
 ```
 
+## 📨 Messaging
+
+When sending messages using `/api/{role}/messages/send`, the `receiver_id` must be a different user. If the authenticated user tries to send a message to themselves, the API responds with:
+
+```json
+{
+  "status": false,
+  "message": "Cannot message yourself",
+  "data": null
+}
+```
+
 ---
 
 ## 📦 Postman Setup Notes
